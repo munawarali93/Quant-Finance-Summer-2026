@@ -1,2 +1,3 @@
+import numpy as np
 def P_estimator(x):
-    return 2 * x + 1
+    return np.diff(x)
