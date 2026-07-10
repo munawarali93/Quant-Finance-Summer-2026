@@ -9,7 +9,7 @@ The main question is:
 
 ## Project Overview
 
-Volatility is central in quantitative finance because it affects option pricing, hedging, and portfolio risk. Empirical volatility paths often look highly irregular, and this irregularity is commonly summarized by a Hurst parameter \(H\). Brownian-like roughness corresponds to \(H \approx 0.5\), while rough-volatility models often use smaller values such as \(H \approx 0.1\)--\(0.3\).
+Volatility is central in quantitative finance because it affects option pricing, hedging, and portfolio risk. Empirical volatility paths often look highly irregular, and this irregularity is commonly summarized by a Hurst parameter \(H\). Brownian-like roughness corresponds to \(H \approx 0.5\), while rough-volatility models often use smaller values such as $H \approx 0.1$ -- $0.3$.
 
 However, spot volatility is not directly observed. In practice, we observe stock prices and construct realized volatility from log returns. This project tests whether the roughness of realized volatility reflects the true roughness of spot volatility.
 
