@@ -21,30 +21,30 @@ We distinguish between:
 
 A log-price model is
 
-\[
+$$
 dX_t = \mu_t dt + \sigma_t dB_t,
 \qquad X_t = \log S_t.
-\]
+$$
 
-The process \(\sigma_t\) is the spot volatility. It is the instantaneous volatility driving the price path, but it is latent and cannot be directly observed from market prices.
+The process $\sigma_t$ is the spot volatility. It is the instantaneous volatility driving the price path, but it is latent and cannot be directly observed from market prices.
 
 ### Realized Volatility
 
 Given observed log returns
 
-\[
+$$
 \Delta X_i = X_{t_{i+1}} - X_{t_i},
-\]
+$$
 
 realized volatility over a window is
 
-\[
+$$
 RV_{t,t+\Delta}
 =
 \left(
 \sum_{t_i \in [t,t+\Delta]} (\Delta X_i)^2
 \right)^{1/2}.
-\]
+$$
 
 Realized volatility is observable, but it is a constructed proxy. It is not the same object as spot volatility.
 
@@ -52,32 +52,32 @@ Realized volatility is observable, but it is a constructed proxy. It is not the 
 
 For observations
 
-\[
+$$
 X_0, X_1, \ldots, X_L
-\]
+$$
 
 on \([0,T]\), the path is split into \(K\) coarse blocks. The normalized \(p\)-variation statistic is
 
-\[
+$$
 W(p)=\sum_{i=0}^{K-1}
 \frac{|X_{b_{i+1}}-X_{b_i}|^p}
 {\sum_{j=b_i}^{b_{i+1}-1}|X_{j+1}-X_j|^p}
 (t_{b_{i+1}}-t_{b_i}).
-\]
+$$
 
 The estimated variation exponent is chosen by
 
-\[
+$$
 \widehat p
 \approx
 \operatorname*{arg\,min}_{p\in[1,12]} |W(p)-T|.
-\]
+$$
 
 The estimated Hurst parameter is
 
-\[
+$$
 \widehat H = \frac{1}{\widehat p}.
-\]
+$$
 
 Interpretation:
 
@@ -93,9 +93,9 @@ We first test the estimator on fractional Brownian motion paths, where the true 
 
 We simulate paths with
 
-\[
+$$
 H \in \{0.1, 0.3, 0.5, 0.8\}.
-\]
+$$
 
 The goal is to check whether the estimator can recover the known roughness.
 
@@ -114,37 +114,37 @@ The estimator performs well on simulated fractional Brownian motion.
 
 We simulate a fractional Ornstein--Uhlenbeck stochastic-volatility model:
 
-\[
+$$
 dY_t = -\gamma Y_t dt + \theta dB_t^H,
 \qquad
 \sigma_t = \sigma_0 e^{Y_t}.
-\]
+$$
 
 Then we simulate the log-price path:
 
-\[
+$$
 dX_t = -\frac12 \sigma_t^2 dt + \sigma_t dW_t,
 \qquad S_t=e^{X_t}.
-\]
+$$
 
 From the simulated price path, we compute realized volatility:
 
-\[
+$$
 RV_i =
 \left(
 \sum_{j=i-m+1}^{i}(\Delta X_j)^2
 \right)^{1/2}.
-\]
+$$
 
 We then compare:
 
-\[
+$$
 \widehat H(\sigma)
 \qquad \text{and} \qquad
 \widehat H(RV).
-\]
+$$
 
-Example result using \(N=90000\), \(K=300\), and \(m=10\):
+Example result using $N=90000$, $K=300$, and $m=10$:
 
 | True \(H\) | \(\widehat H(\sigma)\) | \(\widehat H(RV)\) |
 |---|---:|---:|
@@ -159,15 +159,15 @@ Example result using \(N=90000\), \(K=300\), and \(m=10\):
 
 The estimator recovers the roughness of the instantaneous volatility reasonably well:
 
-\[
+$$
 \widehat H(\sigma) \approx H.
-\]
+$$
 
 However, the realized-volatility roughness remains small across the tested values of \(H\).
 
 ### Experiment 3: Sensitivity to Realized-Volatility Window Size
 
-We fix the true volatility roughness at \(H=0.3\) and change the realized-volatility window size \(m\).
+We fix the true volatility roughness at \(H=0.3\) and change the realized-volatility window size $m$.
 
 | RV window \(m\) | Window length \(\Delta\) | \(\widehat H(\sigma)\) | \(\widehat H(RV)\) |
 |---:|---:|---:|---:|
@@ -176,7 +176,7 @@ We fix the true volatility roughness at \(H=0.3\) and change the realized-volati
 | 100 | 0.00111 | 0.28381 | 0.49889 |
 | 300 | 0.00333 | 0.30167 | 0.65755 |
 
-The estimate from instantaneous volatility remains close to the true value \(H=0.3\), while the estimate from realized volatility changes strongly with the window size.
+The estimate from instantaneous volatility remains close to the true value $H=0.3$, while the estimate from realized volatility changes strongly with the window size.
 
 This shows that realized-volatility roughness is sensitive to the construction of the realized-volatility path.
 
