@@ -1,4 +1,5 @@
 # Quant-Finance-Summer-2026
+
 # Testing Roughness in Realized Volatility
 
 This project studies whether the roughness estimated from realized volatility is a reliable indicator of the roughness of the underlying spot volatility, or whether it is affected by how realized volatility is constructed.
@@ -9,17 +10,17 @@ The main question is:
 
 ## Project Overview
 
-Volatility is central in quantitative finance because it affects option pricing, hedging, and portfolio risk. Empirical volatility paths often look highly irregular, and this irregularity is commonly summarized by a Hurst parameter \(H\). Brownian-like roughness corresponds to \(H \approx 0.5\), while rough-volatility models often use smaller values such as $H \approx 0.1$ -- $0.3$.
+Volatility is central in quantitative finance because it affects option pricing, hedging, and portfolio risk. Empirical volatility paths often look highly irregular, and this irregularity is commonly summarized by a Hurst parameter $H$. Brownian-like roughness corresponds to $H \approx 0.5$, while rough-volatility models often use smaller values such as $H \approx 0.1$ to $0.3$.
 
 However, spot volatility is not directly observed. In practice, we observe stock prices and construct realized volatility from log returns. This project tests whether the roughness of realized volatility reflects the true roughness of spot volatility.
 
 ## Main Idea
 
-We distinguish between:
+We distinguish between spot volatility and realized volatility.
 
 ### Spot Volatility
 
-A log-price model is
+A standard log-price model is
 
 $$
 dX_t = \mu_t dt + \sigma_t dB_t,
@@ -56,7 +57,7 @@ $$
 X_0, X_1, \ldots, X_L
 $$
 
-on \([0,T]\), the path is split into \(K\) coarse blocks. The normalized \(p\)-variation statistic is
+on $[0,T]$, the path is split into $K$ coarse blocks. The normalized $p$-variation statistic is
 
 $$
 W(p)=\sum_{i=0}^{K-1}
@@ -70,7 +71,7 @@ The estimated variation exponent is chosen by
 $$
 \widehat p
 \approx
-\operatorname*{arg\,min}_{p\in[1,12]} |W(p)-T|.
+\mathrm{argmin}_{p\in[1,12]} |W(p)-T|.
 $$
 
 The estimated Hurst parameter is
@@ -81,9 +82,9 @@ $$
 
 Interpretation:
 
-- \(H \approx 0.5\): Brownian-like roughness.
-- \(H < 0.5\): rougher than Brownian motion.
-- Smaller \(H\) means a more irregular path.
+- $H \approx 0.5$: Brownian-like roughness.
+- $H < 0.5$: rougher than Brownian motion.
+- Smaller $H$ means a more irregular path.
 
 ## Experiments
 
@@ -101,7 +102,7 @@ The goal is to check whether the estimator can recover the known roughness.
 
 Example result:
 
-| True \(H\) | Mean \(\widehat H\) | Std. |
+| True $H$ | Mean $\widehat H$ | Std. |
 |---|---:|---:|
 | 0.1 | 0.1060 | 0.0201 |
 | 0.3 | 0.2991 | 0.0197 |
@@ -123,7 +124,7 @@ $$
 Then we simulate the log-price path:
 
 $$
-dX_t = -\frac12 \sigma_t^2 dt + \sigma_t dW_t,
+dX_t = -\frac{1}{2}\sigma_t^2 dt + \sigma_t dW_t,
 \qquad S_t=e^{X_t}.
 $$
 
@@ -136,17 +137,11 @@ RV_i =
 \right)^{1/2}.
 $$
 
-We then compare:
-
-$$
-\widehat H(\sigma)
-\qquad \text{and} \qquad
-\widehat H(RV).
-$$
+We then compare $\widehat H(\sigma)$ and $\widehat H(RV)$.
 
 Example result using $N=90000$, $K=300$, and $m=10$:
 
-| True \(H\) | \(\widehat H(\sigma)\) | \(\widehat H(RV)\) |
+| True $H$ | $\widehat H(\sigma)$ | $\widehat H(RV)$ |
 |---|---:|---:|
 | 0.10 | 0.088 | 0.224 |
 | 0.20 | 0.211 | 0.218 |
@@ -163,13 +158,13 @@ $$
 \widehat H(\sigma) \approx H.
 $$
 
-However, the realized-volatility roughness remains small across the tested values of \(H\).
+However, the realized-volatility roughness remains small across the tested values of $H$.
 
 ### Experiment 3: Sensitivity to Realized-Volatility Window Size
 
-We fix the true volatility roughness at \(H=0.3\) and change the realized-volatility window size $m$.
+We fix the true volatility roughness at $H=0.3$ and change the realized-volatility window size $m$.
 
-| RV window \(m\) | Window length \(\Delta\) | \(\widehat H(\sigma)\) | \(\widehat H(RV)\) |
+| RV window $m$ | Window length $\Delta$ | $\widehat H(\sigma)$ | $\widehat H(RV)$ |
 |---:|---:|---:|---:|
 | 10 | 0.00011 | 0.29056 | 0.18523 |
 | 30 | 0.00033 | 0.28049 | 0.32981 |
@@ -195,7 +190,7 @@ Data summary:
 
 Estimated roughness of AAPL realized volatility:
 
-| RV window | Length of RV path | \(\widehat H(RV)\) |
+| RV window | Length of RV path | $\widehat H(RV)$ |
 |---:|---:|---:|
 | 2 | 7372 | 0.1132 |
 | 5 | 7315 | 0.2168 |
@@ -210,10 +205,8 @@ The estimated roughness increases as the realized-volatility window size increas
 
 Realized-volatility roughness is not a fixed property of the market path alone. It depends strongly on how realized volatility is constructed.
 
-A low estimate of
+A low estimate of $\widehat H(RV)$ should not automatically be interpreted as proof that spot volatility is rough. The realized-volatility window size must be reported and tested carefully.
 
-\[
-\widehat H(RV)
-\]
+## Final Message
 
-should not automatically be interpreted as proof that spot volatility is rough. The realized-volatility window size must be reported and tested carefully.
+This project shows that realized volatility can look rough, but the estimated roughness depends strongly on the construction method. Therefore, roughness estimates from realized volatility should be interpreted with caution and reported together with robustness checks.
