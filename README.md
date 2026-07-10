@@ -40,9 +40,9 @@ $$
 realized volatility over a window is
 
 
+
 $$RV_{t,t+\Delta}
-=
-\left(
+= \left(
 \sum_{t_i \in [t,t+\Delta]} (\Delta X_i)^2
 \right)^{1/2}.
 $$
